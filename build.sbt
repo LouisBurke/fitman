@@ -39,7 +39,9 @@ libraryDependencies += "com.google.inject.extensions" % "guice-testlib" % versio
 libraryDependencies += "com.twitter.finatra" % "finatra-jackson_2.11" % versions.finatra % "test"  classifier "tests"
 
 libraryDependencies += "com.typesafe.slick" %% "slick" % "3.1.1"
-libraryDependencies += "com.h2database" % "h2" % "1.4.191"
+libraryDependencies += "com.typesafe.slick" %% "slick-hikaricp" % "3.1.1"
+//libraryDependencies += "com.h2database" % "h2" % "1.4.191"
+libraryDependencies += "postgresql" % "postgresql" % "9.1-901.jdbc4"
 
 libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.6" % "test"
 libraryDependencies += "org.specs2" %% "specs2" % "2.3.12" % "test"

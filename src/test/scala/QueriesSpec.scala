@@ -1,11 +1,11 @@
 import com.louisburke.datamodel.DataModel.Task
-import com.louisburke.datamodel.{DataModel, Priority}
+import com.louisburke.datamodel.{Priority, DataModel}
 import com.louisburke.queries.Queries
-import org.scalatest.{BeforeAndAfterAll, FunSpec, Matchers}
-import java.time.LocalDateTime
 
-import slick.dbio.DBIO
-import slick.jdbc.JdbcBackend._
+import org.scalatest.{BeforeAndAfterAll, FunSpec, Matchers}
+
+import java.time.LocalDateTime
+import slick.driver.PostgresDriver.api._
 
 import scala.concurrent._
 import scala.concurrent.duration._
@@ -23,7 +23,7 @@ class QueriesSpec extends FunSpec with Matchers with BeforeAndAfterAll {
 
   override protected def beforeAll(): Unit = {
     db = Database.forConfig("taskmaster")
-    Await.result(db.run(DataModel.createTaskTableAction), 2 seconds)
+    Await.result(db.run(DataModel.createTaskTableAction), 10 seconds)
     t1 = Task(title = "Write part 1 blog on Slick", dueBy = LocalDateTime.now().minusDays(7), tags = Set("blogging", "scala", "slick"), priority = Priority.HIGH)
     t2 = Task(title = "Give a Java 8 training", dueBy = LocalDateTime.now().minusDays(3), tags = Set("java", "training", "travel"), priority = Priority.LOW)
     t3 = Task(title = "Write part 2 blog on Slick queries", dueBy = LocalDateTime.now(), tags = Set("blogging", "scala", "slick"), priority = Priority.HIGH)
