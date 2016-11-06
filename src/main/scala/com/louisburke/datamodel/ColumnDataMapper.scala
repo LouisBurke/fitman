@@ -3,7 +3,7 @@ package com.louisburke.datamodel
 import java.sql.Timestamp
 import java.time.LocalDateTime
 
-import slick.driver.H2Driver.api._
+import slick.driver.PostgresDriver.api._
 import com.louisburke.datamodel.Priority.Priority
 
 object ColumnDataMapper {

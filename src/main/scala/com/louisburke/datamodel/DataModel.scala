@@ -1,6 +1,6 @@
 package com.louisburke.datamodel
 
-import slick.driver.H2Driver.api._
+import slick.driver.PostgresDriver.api._
 import java.time.LocalDateTime
 
 import com.louisburke.datamodel.ColumnDataMapper._

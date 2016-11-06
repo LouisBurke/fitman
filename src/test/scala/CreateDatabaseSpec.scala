@@ -4,7 +4,7 @@ import com.louisburke.datamodel.DataModel._
 import java.time.LocalDateTime
 
 import org.scalatest.{FunSpec, Matchers}
-import slick.driver.H2Driver.api._
+import slick.driver.PostgresDriver.api._
 
 import scala.concurrent._
 import scala.concurrent.duration._

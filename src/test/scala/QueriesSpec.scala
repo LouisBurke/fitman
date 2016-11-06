@@ -1,11 +1,11 @@
 import com.louisburke.datamodel.DataModel.Task
-import com.louisburke.datamodel.{Priority, DataModel}
+import com.louisburke.datamodel.{DataModel, Priority}
 import com.louisburke.queries.Queries
-
 import org.scalatest.{BeforeAndAfterAll, FunSpec, Matchers}
-
 import java.time.LocalDateTime
-import slick.driver.H2Driver.api._
+
+import slick.dbio.DBIO
+import slick.jdbc.JdbcBackend._
 
 import scala.concurrent._
 import scala.concurrent.duration._
@@ -22,7 +22,7 @@ class QueriesSpec extends FunSpec with Matchers with BeforeAndAfterAll {
   var t7: Task = _
 
   override protected def beforeAll(): Unit = {
-    db = Database.forConfig("taskydb")
+    db = Database.forConfig("taskmaster")
     Await.result(db.run(DataModel.createTaskTableAction), 2 seconds)
     t1 = Task(title = "Write part 1 blog on Slick", dueBy = LocalDateTime.now().minusDays(7), tags = Set("blogging", "scala", "slick"), priority = Priority.HIGH)
     t2 = Task(title = "Give a Java 8 training", dueBy = LocalDateTime.now().minusDays(3), tags = Set("java", "training", "travel"), priority = Priority.LOW)
@@ -112,7 +112,6 @@ class QueriesSpec extends FunSpec with Matchers with BeforeAndAfterAll {
       val exists = performAction(Queries.checkIfAnyHighPriorityTaskExistsToday.result)
       exists should be(true)
     }
-
 
   }
 

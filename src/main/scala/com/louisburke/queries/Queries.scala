@@ -7,7 +7,7 @@ import com.louisburke.datamodel.DataModel._
 import com.louisburke.datamodel.Priority
 import com.louisburke.datamodel.Priority._
 
-import slick.driver.H2Driver.api._
+import slick.driver.PostgresDriver.api._
 
 object Queries {
 
