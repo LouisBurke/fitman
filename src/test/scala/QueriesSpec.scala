@@ -58,11 +58,62 @@ class QueriesSpec extends FunSpec with Matchers with BeforeAndAfterAll {
       taskTitles should be(List(t1.title, t2.title, t3.title, t4.title, t5.title, t6.title, t7.title))
     }
 
-    it("should select all the high priority task titles"){
+    it("should select task title, priority, and creation date for all tasks") {
+      val taskTitles = performAction(Queries.selectMultipleColumnsQuery.result)
+      taskTitles should have length 7
+      taskTitles should be(List(
+        (t1.title, t1.priority, t1.createdAt),
+        (t2.title, t2.priority, t2.createdAt),
+        (t3.title, t3.priority, t3.createdAt),
+        (t4.title, t4.priority, t4.createdAt),
+        (t5.title, t5.priority, t5.createdAt),
+        (t6.title, t6.priority, t6.createdAt),
+        (t7.title, t7.priority, t7.createdAt))
+      )
+    }
+
+    it("should select all the high priority task titles") {
       val highPriorityTasks = performAction(Queries.selectHighPriorityTasksQuery.result)
       highPriorityTasks should have length 4
       highPriorityTasks should be(List(t1.title, t3.title, t5.title, t7.title))
     }
+
+
+    it("should sort tasks in descending order of due date") {
+      val tasks = performAction(Queries.selectTasksSortedByDueDateDescQuery.result)
+      tasks.head should have(
+        'title (t7.title),
+        'description (t7.description),
+        'createdAt (t7.createdAt),
+        'dueBy (t7.dueBy),
+        'tags (t7.tags)
+      )
+    }
+
+    it("should find all due tasks") {
+      val dueTasks = performAction(Queries.findAllDueTasks.result)
+      dueTasks should have length 5
+      dueTasks.map(_.title) should be(List(t3.title, t4.title, t5.title, t6.title, t7.title))
+    }
+
+    it("should find all tasks due today") {
+      val dueTasks = performAction(Queries.selectAllTaskTitlesDueToday.result)
+      dueTasks should have length 1
+      dueTasks should be(List(t3.title))
+    }
+
+
+    it("select tasks between today and same date next month ") {
+      val tasks = performAction(Queries.selectTasksBetweenTodayAndSameDateNextMonthQuery.result)
+      tasks should have length 2
+    }
+
+    it("check if any high priority task exists today") {
+      val exists = performAction(Queries.checkIfAnyHighPriorityTaskExistsToday.result)
+      exists should be(true)
+    }
+
+
   }
 
 }
