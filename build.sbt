@@ -40,7 +40,7 @@ libraryDependencies += "com.twitter.finatra" % "finatra-jackson_2.11" % versions
 
 libraryDependencies += "com.typesafe.slick" %% "slick" % "3.1.0"
 libraryDependencies += "com.typesafe.slick" %% "slick-hikaricp" % "3.1.0"
-libraryDependencies += "org.postgresql" % "postgresql" % "9.4-1200-jdbc41"
+libraryDependencies += "com.h2database" % "h2" % "1.4.191"
 
 libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.6" % "test"
 libraryDependencies += "org.specs2" %% "specs2" % "2.3.12" % "test"

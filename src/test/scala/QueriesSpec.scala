@@ -4,8 +4,6 @@ import com.louisburke.queries.Queries
 import org.scalatest.{BeforeAndAfterAll, FunSpec, Matchers}
 import java.time.LocalDateTime
 
-//import com.twitter.util.Config
-
 import com.typesafe.config.ConfigFactory
 import slick.backend.DatabaseConfig
 import slick.driver.JdbcProfile
@@ -26,21 +24,16 @@ class QueriesSpec extends FunSpec with Matchers with BeforeAndAfterAll {
   var t7: Task = _
 
   override protected def beforeAll(): Unit = {
-    val conf = ConfigFactory.load()
-    val dbConfig = DatabaseConfig.forConfig[JdbcProfile]("postgre")
-    lazy val db = dbConfig.db
-
+    db = Database.forConfig("taskmaster")
     Await.result(db.run(DataModel.createTaskTableAction), 10 seconds)
     t1 = Task(title = "Write part 1 blog on Slick", "Some desc", dueBy = LocalDateTime.now().minusDays(7), tags = Set("blogging", "scala", "slick"), priority = Priority.HIGH)
-    /*t2 = Task(title = "Give a Java 8 training", dueBy = LocalDateTime.now().minusDays(3), tags = Set("java", "training", "travel"), priority = Priority.LOW)
+    t2 = Task(title = "Give a Java 8 training", dueBy = LocalDateTime.now().minusDays(3), tags = Set("java", "training", "travel"), priority = Priority.LOW)
     t3 = Task(title = "Write part 2 blog on Slick queries", dueBy = LocalDateTime.now(), tags = Set("blogging", "scala", "slick"), priority = Priority.HIGH)
     t4 = Task(title = "Read Good to Great book", dueBy = LocalDateTime.now().plusDays(15), tags = Set("reading", "books", "startup"), priority = Priority.MEDIUM)
     t5 = Task(title = "Read Programming Scala book", dueBy = LocalDateTime.now().plusDays(30), tags = Set("reading", "books", "scala"), priority = Priority.HIGH)
     t6 = Task(title = "Go to Goa for holiday", dueBy = LocalDateTime.now().plusDays(60), tags = Set("travel"), priority = Priority.LOW)
     t7 = Task(title = "Build my dream application using Play framework and Slick", dueBy = LocalDateTime.now().plusMonths(3), tags = Set("application", "play", "startup"), priority = Priority.HIGH)
-    */
-    //val tasks = Seq(t1, t2, t3, t4, t5, t6, t7)
-    val tasks = Seq(t1)
+    val tasks = Seq(t1, t2, t3, t4, t5, t6, t7)
     performAction(DataModel.insertTaskAction(tasks: _*))
   }
 
